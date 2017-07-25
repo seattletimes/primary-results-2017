@@ -1,0 +1,104 @@
+<%
+var districts = {};
+var featured = {
+  40: { race: "City of Seattle - Mayor", results: [] },
+  55: { race: "King County Proposition No. 1", results: [] }
+};
+csv.results.forEach(function(result) {
+  if (result.raceID in featured) {
+    var race = featured[result.raceID];
+    race.counted = result.counted;
+    race.registered = result.registered;
+    race.turnout = result.turnout;
+    race.results.push(result);
+    return;
+  }
+  if (!districts[result.district]) districts[result.district] = {
+    races: {}
+  };
+  var district = districts[result.district];
+  if (!district.races[result.raceID]) district.races[result.raceID] = {
+    race: result.race,
+    sort: result.raceSort,
+    counted: result.counted,
+    registered: result.registered,
+    turnout: result.turnout,
+    results: []
+  }
+  district.races[result.raceID].results.push(result);
+});
+
+%><!doctype html>
+<html lang="en-US">
+  <head>
+    <%= t.include("partials/_head.html", grunt.data.json) %>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+
+    <%= t.include("partials/_nav.html") %>
+
+    <%= t.include("partials/_ad.html", { type: "banner" }) %>
+
+    <header class="splash">
+      <div class="constrained">
+        <img src="./assets/elex-logo.svg">
+        <h1>Primary 2017 results</h1>
+      </div>
+    </header>
+
+    <main class="primary constrained">
+      <section class="featured district">
+        <h2>Featured races</h2>
+        <% for (var id in featured) { var race = featured[id]; %>
+        <div class="race">
+          <h3><%= race.race %></h3>
+          <ul class="results">
+            <% race.results.sort((a, b) => b.votes - a.votes).forEach(function(result) { %>
+            <li class="candidate">
+              <span class="name"><%= result.candidate %></span>
+              <span class="numbers">
+                <%= result.votes %> (<%= result.votePercent %>%)
+              </span>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %>
+      </section>
+
+      <% Object.keys(districts).sort().forEach(function(d) { var district = districts[d] %>
+      <section class="district">
+        <h2><%= d %></h2>
+        <% for (var id in district.races) { var race = district.races[id]; %>
+        <div class="race">
+          <h3><%= race.race %></h3>
+          <ul class="results">
+            <% race.results.sort((a, b) => b.votes - a.votes).forEach(function(result) { %>
+            <li class="candidate">
+              <span class="name"><%= result.candidate %></span>
+              <span class="numbers">
+                <%= result.votes %> (<%= result.votePercent %>%)
+              </span>
+            <% }) %>
+          </ul>
+        </div>
+        <% } %>
+      </section>
+      <% }) %>
+    </main>
+
+    <footer class="notes">
+      <div class="constrained">
+        * Notes go here
+      </div>
+    </footer>
+
+    <%= t.include("partials/_navBottom.html") %>
+
+    <script src="app.js" async></script>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_analytics.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
+  </body>
+</html>

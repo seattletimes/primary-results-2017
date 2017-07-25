@@ -1,0 +1,55 @@
+@import "seattletimes";
+
+.splash {
+
+}
+
+.constrained {
+  max-width: 900px;
+  margin: auto;
+  padding: 0 16px;
+}
+
+.primary {
+  font-family: @df-sans;
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+
+.district {
+  margin-bottom: 36px;
+  padding: 1px 0;
+
+  h2 {
+    // district title
+    font-family: @df-serif;
+    margin-bottom: 0;
+    border-bottom: 1px solid @df-light-gray;
+  }
+
+  h3 {
+    //race title
+    margin-bottom: 8px;
+    font-size: 19px;
+    text-align: center;
+  }
+
+  .results {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    columns: 2;
+
+    li {
+      .display-flex();
+      .justify-content(space-between);
+      border-bottom: dashed 1px @df-light-gray;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.notes {
+  background: @df-light-gray;
+  padding: 24px;
+}

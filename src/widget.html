@@ -1,0 +1,69 @@
+<%
+
+//we want the mayor (40) and prop 1 (55)
+var races = {
+  40: { 
+    race: "Seattle mayor",
+    results: [], filter: [
+    "Nikkita Oliver",
+    "Jenny Durkan",
+    "Mike McGinn",
+    "Bob Hasegawa",
+    "Jessyn Farrell",
+    "Cary Moon"
+  ],
+  className: "mayor" },
+  55: { race: "King Co. Prop. 1 (sales tax)", results: [] }
+};
+csv.results.forEach(function(result) {
+  if (result.raceID in races) {
+    var r = races[result.raceID];
+    if (r.filter && r.filter.indexOf(result.candidate) == -1) return;
+    // r.race = result.race;
+    r.results.push(result);
+  }
+});
+
+%><!doctype html>
+<html lang="en-US">
+  <head>
+    <%= t.include("partials/_head.html", grunt.data.json) %>
+    <link rel="stylesheet" type="text/css" href="widget.css">
+  </head>
+  <body>
+
+    <responsive-child>
+      <main class="widget">
+        <div class="banner">
+          <img class="star" src="./assets/star-banner.svg">
+          <span class="text">Primary 2017</span>
+          <img class="star" src="./assets/star-banner.svg">
+        </div>
+        <div class="results">
+          <% for (var r in races) { var race = races[r]; %>
+          <div class="race <%= race.className || "" %>">
+            <h2><%= race.race %></h2>
+            <ul class="candidates">
+              <% race.results.sort(function(a, b) { return b.votes - a.votes }).forEach(function(result) { %>
+              <li class="candidate">
+                <span class="name"><%= result.candidate %></span>
+                <span class="spacer"></span>
+                <span class="numbers"><%= result.votes %> (<%= result.votePercent %>%)</span>
+              <% }); %>
+            </ul>
+          </div>
+          <% } %>
+        </div>
+        <div class="links">
+          <a target="_blank" href="http://seattletimes.com">More results &raquo;</a>
+        </div>
+      </main>
+    </responsive-child>
+
+    <script src="widget.js" async></script>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_analytics.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
+  </body>
+</html>
