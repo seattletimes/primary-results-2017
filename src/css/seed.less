@@ -1,19 +1,51 @@
 @import "seattletimes";
 
-.splash {
-
-}
-
 .constrained {
-  max-width: 900px;
+  max-width: 960px;
   margin: auto;
-  padding: 0 16px;
+  padding: 16px 0;
 }
 
-.primary {
+.splash {
+  .row {
+    .display-flex();
+    .align-items(flex-end);
+    font-size: 32px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    img {
+      width: 240px;
+    }
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 0;
+  }
+
+  .update-notice {
+    font-size: 15px;
+    color: @df-middle-gray;
+    font-family: @df-sans;
+  }
+}
+
+main {
+  .display-flex();
+  .justify-content(space-between);
   font-family: @df-sans;
   padding-top: 36px;
   padding-bottom: 36px;
+
+  .primary {
+    padding-right: 16px;
+    .flex(1 1 600px);
+  }
+
+  .secondary {
+    .flex(0 0 300px);
+  }
 }
 
 .district {
@@ -24,29 +56,71 @@
     // district title
     font-family: @df-serif;
     margin-bottom: 0;
-    border-bottom: 1px solid @df-light-gray;
+    font-size: 28px;
+    // border-bottom: 1px solid @df-light-gray;
   }
 
   h3 {
     //race title
     margin-bottom: 8px;
     font-size: 19px;
-    text-align: center;
+    text-transform: uppercase;
+    color: @df-middle-gray;
+    padding-bottom: 16px;
+    font-weight: normal;
+  }
+
+  .race {
+    margin-bottom: 32px;
   }
 
   .results {
     padding: 0;
     margin: 0;
     list-style-type: none;
-    columns: 2;
+    // columns: 2;
 
     li {
-      .display-flex();
-      .justify-content(space-between);
-      border-bottom: dashed 1px @df-light-gray;
-      margin-bottom: 8px;
+      margin-bottom: 16px;
+      position: relative;
+      line-height: 1;
+      padding-bottom: 8px;
+      border-bottom: 1px solid @df-light-gray;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .row {
+        .display-flex();
+        padding-bottom: 4px;
+      }
+
+      .name {
+        .flex(0 0 25%);
+        font-weight: bold;
+      }
+
+      .bar-container {
+        .flex(0 0 75%);
+
+        .bar {
+          height: 19px;
+          background: @df-dark-gray;
+          float: right;
+        }
+      }
+
+      .numbers {
+        text-align: right;
+        font-size: 16px;
+        padding-top: 4px;
+        color: @df-dark-gray;
+      }
     }
   }
+
+  
 }
 
 .notes {

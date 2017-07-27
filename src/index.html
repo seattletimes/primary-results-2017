@@ -1,10 +1,17 @@
 <%
+var test = true;
+
 var districts = {};
 var featured = {
   40: { race: "City of Seattle - Mayor", results: [] },
   55: { race: "King County Proposition No. 1", results: [] }
 };
 csv.results.forEach(function(result) {
+  
+  if (result.party && result.party.match(/Prefers/)) {
+    result.party = result.party.match(/Prefers (\w+)/)[1];
+  }
+
   if (result.raceID in featured) {
     var race = featured[result.raceID];
     race.counted = result.counted;
@@ -28,6 +35,30 @@ csv.results.forEach(function(result) {
   district.races[result.raceID].results.push(result);
 });
 
+if (test) {
+  var fake = function(race) {
+    var pool = 100000;
+    var votes = pool;
+    race.results.forEach(function(result, i) {
+      result.votes = i == race.results.length - 1 ? votes : Math.round(Math.random() * .75 * votes);
+      votes -= result.votes;
+      result.votePercent = (result.votes / pool * 100).toFixed(1);
+      console.log(result.candidate, result.votes, result.votePercent);
+    });
+  };
+
+  for (var d in districts) {
+    for (var r in districts[d].races) {
+      fake(districts[d].races[r]);
+      districts[d].races[r].results.sort((a, b) => b.votes - a.votes);
+    }
+  }
+
+  for (var r in featured) {
+    fake(featured[r]);
+  }
+}
+
 %><!doctype html>
 <html lang="en-US">
   <head>
@@ -42,50 +73,48 @@ csv.results.forEach(function(result) {
 
     <header class="splash">
       <div class="constrained">
-        <img src="./assets/elex-logo.svg">
+        <div class="row"><img src="./assets/elex-logo.svg">Election 2017</div>
         <h1>Primary 2017 results</h1>
+        <div class="update-notice">
+          <% 
+          var now = new Date();
+          var hours = now.getHours();
+          var suffix = "am";
+          if (hours > 12) {
+            suffix = "pm";
+            if (hours > 13) hours -= 12;
+          }
+          %>
+
+          Last updated: Aug. 1 at <%= hours %>:<%= now.getMinutes() %> <%= suffix %>
+        </div>
       </div>
     </header>
 
-    <main class="primary constrained">
-      <section class="featured district">
-        <h2>Featured races</h2>
-        <% for (var id in featured) { var race = featured[id]; %>
-        <div class="race">
-          <h3><%= race.race %></h3>
-          <ul class="results">
-            <% race.results.sort((a, b) => b.votes - a.votes).forEach(function(result) { %>
-            <li class="candidate">
-              <span class="name"><%= result.candidate %></span>
-              <span class="numbers">
-                <%= result.votes %> (<%= result.votePercent %>%)
-              </span>
-            <% }) %>
-          </ul>
-        </div>
-        <% } %>
-      </section>
+    <main class="constrained">
+      <div class="primary">
+        <section class="featured district">
+          <h2>Featured races</h2>
+          <% for (var id in featured) { %>
+            <%= t.include("_race.html", { data: featured[id] }) %>
+          <% } %>
+        </section>
 
-      <% Object.keys(districts).sort().forEach(function(d) { var district = districts[d] %>
-      <section class="district">
-        <h2><%= d %></h2>
-        <% for (var id in district.races) { var race = district.races[id]; %>
-        <div class="race">
-          <h3><%= race.race %></h3>
-          <ul class="results">
-            <% race.results.sort((a, b) => b.votes - a.votes).forEach(function(result) { %>
-            <li class="candidate">
-              <span class="name"><%= result.candidate %></span>
-              <span class="numbers">
-                <%= result.votes %> (<%= result.votePercent %>%)
-              </span>
-            <% }) %>
-          </ul>
-        </div>
-        <% } %>
-      </section>
-      <% }) %>
+        <% Object.keys(districts).sort().forEach(function(d) { var district = districts[d] %>
+        <section class="district">
+          <h2><%= d %></h2>
+          <% for (var id in district.races) { %>
+          <%= t.include("_race.html", { data: district.races[id] }) %>
+          <% } %>
+        </section>
+        <% }) %>
+      </div>
+
+      <div class="floating-ad secondary">
+        <%= t.include("partials/_ad.html", { type: "right" }) %>
+      </div>
     </main>
+
 
     <footer class="notes">
       <div class="constrained">

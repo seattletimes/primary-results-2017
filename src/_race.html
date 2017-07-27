@@ -1,0 +1,20 @@
+<div class="race">
+  <h3><%= data.race %></h3>
+
+  <ul class="results">
+    
+    <% data.results.sort((a, b) => b.votes - a.votes).forEach(function(result) { %>
+    <li class="candidate">
+      <div class="row">
+        <div class="name"><%= result.candidate %></div>
+        <div class="bar-container">
+          <div class="bar <%= result.party %>" style="width: <%= result.votePercent %>%"></div>
+        </div>
+      </div>
+      <div class="numbers">
+        <b><%= result.votePercent %>%</b> (<%= result.votes.toLocaleString() %>)
+      </div>
+    
+    <% }) %>
+  </ul>
+</div>

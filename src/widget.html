@@ -13,7 +13,7 @@ var races = {
     "Cary Moon"
   ],
   className: "mayor" },
-  55: { race: "King Co. Prop. 1 (sales tax)", results: [] }
+  55: { race: "King Co. Prop. 1", results: [] }
 };
 csv.results.forEach(function(result) {
   if (result.raceID in races) {
@@ -48,7 +48,9 @@ csv.results.forEach(function(result) {
               <li class="candidate">
                 <span class="name"><%= result.candidate %></span>
                 <span class="spacer"></span>
-                <span class="numbers"><%= result.votes %> (<%= result.votePercent %>%)</span>
+                <span class="numbers">
+                  <b><%= result.votePercent %>%</b>
+                  (<%= result.votes.toLocaleString() %>)</span>
               <% }); %>
             </ul>
           </div>
