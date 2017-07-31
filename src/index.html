@@ -83,7 +83,7 @@ if (test) {
     <header class="splash">
       <div class="constrained">
         <div class="row"><img src="./assets/elex-logo.svg">Election 2017</div>
-        <h1>Primary 2017 results</h1>
+        <h1>King County Primary 2017 results</h1>
         <div class="update-notice">
           <% 
           var now = new Date();
@@ -102,13 +102,14 @@ if (test) {
 
     <main class="constrained">
       <div class="primary">
+        <h1>Featured races</h1>
         <section class="featured district">
-          <h2>Featured races</h2>
           <% for (var id in featured) { %>
             <%= t.include("_race.html", { data: featured[id] }) %>
           <% } %>
         </section>
 
+        <h1>Other races</h1>
         <% var adCounter = 0; %>
         <% Object.keys(districts).sort().forEach(function(d) {
           var district = districts[d];
