@@ -6,15 +6,15 @@
     },
     "live": {
       "bucket": "projects.seattletimes.com",
-      "path": ""
+      "path": "2017/primary-results"
     }
   },
-  "title": "",
+  "title": "Primary 2017 Results",
   "description": "",
-  "url": "",
-  "image": "assets/social.jpg",
+  "url": "http://projects.seattletimes.com/2017/primary-results/",
+  "image": "assets/elex-social.jpg",
   "sheets": [],
   "standout": false,
-  "embedded": true,
+  "embedded": false,
   "production": false
 }

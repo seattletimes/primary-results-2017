@@ -3,7 +3,7 @@
 //we want the mayor (40) and prop 1 (55)
 var races = {
   40: { 
-    race: "Seattle mayor",
+    race: "Seattle mayor *",
     results: [], filter: [
     "Nikkita Oliver",
     "Jenny Durkan",
@@ -13,7 +13,7 @@ var races = {
     "Cary Moon"
   ],
   className: "mayor" },
-  55: { race: "King Co. Prop. 1", results: [] }
+  55: { race: "King Co. Prop. 1 (sales tax)", results: [] }
 };
 csv.results.forEach(function(result) {
   if (result.raceID in races) {
@@ -55,6 +55,9 @@ csv.results.forEach(function(result) {
             </ul>
           </div>
           <% } %>
+        </div>
+        <div class="footnote">
+          * Leaders among 21 candidates, in results so far. Top two advance to Nov. 7 election.
         </div>
         <div class="links">
           <a target="_blank" href="http://seattletimes.com">More results &raquo;</a>

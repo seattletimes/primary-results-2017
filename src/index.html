@@ -1,10 +1,14 @@
 <%
 var test = true;
 
+var asterisks = {
+  58: "*"
+};
+
 var districts = {};
 var featured = {
   40: { race: "City of Seattle - Mayor", results: [] },
-  55: { race: "King County Proposition No. 1", results: [] }
+  55: { race: "King County Proposition No. 1 (sales tax)", results: [] }
 };
 csv.results.forEach(function(result) {
   
@@ -30,8 +34,9 @@ csv.results.forEach(function(result) {
     counted: result.counted,
     registered: result.registered,
     turnout: result.turnout,
-    results: []
-  }
+    results: [],
+    asterisk: asterisks[result.raceID]
+  };
   district.races[result.raceID].results.push(result);
 });
 
@@ -40,10 +45,11 @@ if (test) {
     var pool = 100000;
     var votes = pool;
     race.results.forEach(function(result, i) {
+      if (result.votes) return;
+      console.log("Faking votes for " + result.candidate)
       result.votes = i == race.results.length - 1 ? votes : Math.round(Math.random() * .75 * votes);
       votes -= result.votes;
       result.votePercent = (result.votes / pool * 100).toFixed(1);
-      console.log(result.candidate, result.votes, result.votePercent);
     });
   };
 
@@ -86,7 +92,7 @@ if (test) {
           }
           %>
 
-          Last updated: Aug. 1 at <%= hours %>:<%= now.getMinutes() %> <%= suffix %>
+          Last updated: Aug. <%= now.getDate() %> at <%= hours %>:<%= now.getMinutes() %> <%= suffix %>
         </div>
       </div>
     </header>
@@ -118,7 +124,7 @@ if (test) {
 
     <footer class="notes">
       <div class="constrained">
-        * Notes go here
+        * 60% required to pass
       </div>
     </footer>
 
