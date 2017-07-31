@@ -1,5 +1,8 @@
 <div class="race">
-  <h3><%= data.race %> <%= data.asterisk %></h3>
+  <h3><%= data.race %></h3>
+  <% if (data.asterisk) { %>
+  <h4 class="race-note">Note: <%= data.asterisk %></h4>
+  <% } %>
 
   <ul class="results">
     

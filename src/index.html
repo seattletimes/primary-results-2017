@@ -2,7 +2,7 @@
 var test = true;
 
 var asterisks = {
-  58: "*"
+  58: "60% required to pass"
 };
 
 var districts = {};
@@ -41,12 +41,14 @@ csv.results.forEach(function(result) {
 });
 
 if (test) {
+  var fakedCount = 0;
   var fake = function(race) {
     var pool = 100000;
     var votes = pool;
     race.results.forEach(function(result, i) {
       if (result.votes) return;
-      console.log("Faking votes for " + result.candidate)
+      fakedCount++;
+      // console.log("Faking votes for " + result.candidate)
       result.votes = i == race.results.length - 1 ? votes : Math.round(Math.random() * .75 * votes);
       votes -= result.votes;
       result.votePercent = (result.votes / pool * 100).toFixed(1);
@@ -63,6 +65,7 @@ if (test) {
   for (var r in featured) {
     fake(featured[r]);
   }
+  console.log(`Faked ${fakedCount} race results`);
 }
 
 %><!doctype html>
@@ -123,9 +126,6 @@ if (test) {
 
 
     <footer class="notes">
-      <div class="constrained">
-        * 60% required to pass
-      </div>
     </footer>
 
     <%= t.include("partials/_navBottom.html") %>
