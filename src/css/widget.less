@@ -8,11 +8,15 @@
 
 .banner {
   .display-flex();
-  .align-items(center);
-  .justify-content(space-around);
+  .align-items(flex-end);
+  .justify-content(flex-start);
 
   img {
     .flex(0 0 25%);
+
+    @media @mobile {
+      .flex(0 0 33%);
+    }
   }
 
   .text {
@@ -84,6 +88,7 @@
 .footnote {
   font-family: @df-sans;
   font-size: 15px;
+  padding: 8px;
 }
 
 .links {

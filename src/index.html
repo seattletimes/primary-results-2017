@@ -109,13 +109,19 @@ if (test) {
           <% } %>
         </section>
 
-        <% Object.keys(districts).sort().forEach(function(d) { var district = districts[d] %>
+        <% var adCounter = 0; %>
+        <% Object.keys(districts).sort().forEach(function(d) {
+          var district = districts[d];
+          adCounter++; %>
         <section class="district">
           <h2><%= d %></h2>
           <% for (var id in district.races) { %>
           <%= t.include("_race.html", { data: district.races[id] }) %>
           <% } %>
         </section>
+        <% if (adCounter % 5 == 0) { %>
+        <%= t.include("partials/_ad.html", { type: "square" }) %>
+        <% } %>
         <% }) %>
       </div>
 
