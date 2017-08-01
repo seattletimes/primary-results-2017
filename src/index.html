@@ -1,5 +1,5 @@
 <%
-var test = true;
+var test = false;
 
 var asterisks = {
   58: "60% required to pass"
@@ -83,7 +83,7 @@ if (test) {
     <header class="splash">
       <div class="constrained">
         <div class="row"><img src="./assets/elex-logo.svg">Election 2017</div>
-        <h1>King County Primary 2017 results</h1>
+        <h1>King County 2017 primary results</h1>
         <div class="update-notice">
           <% 
           var now = new Date();
@@ -97,6 +97,10 @@ if (test) {
 
           Last updated: Aug. <%= now.getDate() %> at <%= hours %>:<%= now.getMinutes() %> <%= suffix %>
         </div>
+
+        <p class="chatter">
+          The top two candidates advance to the Nov. 7 election. Vote counts will be updated daily by King County.Click <a href="https://snohomishcountywa.gov/227/Election-Results">here for Snohomish County results</a> and <a href="https://spf.kitsapgov.com/auditor/Documents/PRIM0817.html">here for Kitsap County results</a>.
+
       </div>
     </header>
 
