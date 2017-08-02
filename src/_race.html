@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="numbers">
-        <b><%= result.votePercent %>%</b> (<%= result.votes.toLocaleString() %>)
+        <b><%= result.votePercent.toFixed(1) %>%</b> (<%= result.votes.toLocaleString() %>)
       </div>
     
     <% }) %>

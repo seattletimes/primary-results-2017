@@ -48,7 +48,7 @@ csv.results.forEach(function(result) {
                 <span class="name"><%= result.candidate %></span>
                 <span class="spacer"></span>
                 <span class="numbers">
-                  <b><%= result.votePercent %>%</b>
+                  <b><%= result.votePercent.toFixed(1) %>%</b>
                   (<%= result.votes.toLocaleString() %>)</span>
               <% }); %>
             </ul>
