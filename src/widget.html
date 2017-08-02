@@ -65,9 +65,5 @@ csv.results.forEach(function(result) {
     </responsive-child>
 
     <script src="widget.js" async></script>
-    <% if (json.project.production) { %>
-    <%= !json.project.embedded ? t.include("partials/_analytics.html") : "" %>
-    <%= t.include("partials/_workHere.html") %>
-    <% } %>
   </body>
 </html>

@@ -93,9 +93,11 @@ if (test) {
             suffix = "pm";
             if (hours > 13) hours -= 12;
           }
+          var minutes = now.getMinutes();
+          if (minutes < 10) minutes = "0" + minutes;
           %>
 
-          Last updated: Aug. <%= now.getDate() %> at <%= hours %>:<%= now.getMinutes() %> <%= suffix %>
+          Last updated: Aug. <%= now.getDate() %> at <%= hours %>:<%= minutes %> <%= suffix %>
         </div>
 
       </div>
