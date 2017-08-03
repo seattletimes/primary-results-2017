@@ -38,6 +38,21 @@ csv.results.forEach(function(result) {
           <img class="star" src="./assets/elex-logo.svg">
           <span class="text">Election 2017</span>
         </div>
+        <div class="updated">
+          <% 
+          var now = new Date();
+          var hours = now.getHours();
+          var suffix = "am";
+          if (hours > 12) {
+            suffix = "pm";
+            if (hours > 13) hours -= 12;
+          }
+          var minutes = now.getMinutes();
+          if (minutes < 10) minutes = "0" + minutes;
+          %>
+
+          Last updated: Aug. <%= now.getDate() %> at <%= hours %>:<%= minutes %> <%= suffix %>
+        </div>
         <div class="results">
           <% for (var r in races) { var race = races[r]; %>
           <div class="race <%= race.className || "" %>">
